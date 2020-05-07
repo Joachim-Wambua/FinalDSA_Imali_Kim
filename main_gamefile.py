@@ -3,6 +3,7 @@ import random
 import math
 # a class that helps us handle any kind of music in pygame
 from pygame import mixer
+from high_score_module import highscore
 
 #  Initialise pygame
 pygame.init()
@@ -88,9 +89,10 @@ def display_score(x, y):
 # function that displays the End Game Text
 def game_over_display():
     # Initialising the text to be displayed
-    gameover_text = gameover_font.render('FUCK YOU LOSER ', True, (255, 255, 255))
+    gameover_text = gameover_font.render('GAME OVER!', True, (255, 255, 255))
     # Displaying the text
     gameWindow.blit(gameover_text, (200, 250))
+
 
 # Player Character Function
 # Arguments x_axis and y_axis to take user input for moving the player accordingly
@@ -154,6 +156,7 @@ while gameRunning is True:
                     # gets the x coordinate of the spaceship
                     bulletPosX = playerPosX
                     fire_bullet(bulletPosX, bulletPosY)
+                # if
         # Check if pressed key has been released KEYUP- Releasing the pressed key
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
@@ -179,6 +182,7 @@ while gameRunning is True:
                 # ensures the enemies go below the screen(Removed from the Screen)
                 enemyPosY[j] = 2000
             game_over_display()
+            highscore(gameWindow, "score_file.txt", score)
             break
         enemyPosX[i] += enemyPosx_change[i]
 
@@ -200,7 +204,6 @@ while gameRunning is True:
             bulletPosY = 480
             bullet_state = 'set'
             score += 1
-            # print(score)
             enemyPosX[i] = random.randint(0, 800)
             enemyPosY[i] = random.randint(50, 150)
         # Instantiate the enemy characters within the for loop
